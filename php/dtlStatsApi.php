@@ -1,3 +1,5 @@
+<?php
+
 class Serv
 {
     private static $instance;
