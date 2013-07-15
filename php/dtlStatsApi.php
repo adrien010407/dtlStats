@@ -133,6 +133,6 @@ class Stat
 
     public static function update($stat, $value)
     {
-        return static::$instance->__getStat($stat, $value);
+        return static::$instance->__updateStat($stat, $value);
     }
 }

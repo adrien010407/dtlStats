@@ -2,6 +2,7 @@ package net.dandielo.stats.bukkit;
 
 import net.dandielo.stats.api.Listener;
 import net.dandielo.stats.api.Stat;
+import net.dandielo.stats.api.Updater;
 import net.dandielo.stats.core.Manager;
 import net.dandielo.stats.core.Server;
 
@@ -10,7 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Stats extends JavaPlugin implements Listener {
+public class Stats extends JavaPlugin implements Listener, Updater {
 	//console prefix
 	public static final String PREFIX = "[dtlStats]" + ChatColor.WHITE; 
 	
@@ -35,6 +36,7 @@ public class Stats extends JavaPlugin implements Listener {
 		server = Server.instance;
 		
 		Manager.registerListener("dtlStats", this);
+		Manager.registerUpdater("dtlStats", this);
 		
 		info("Enabled dtlStats beta");
 	}
@@ -56,7 +58,11 @@ public class Stats extends JavaPlugin implements Listener {
 		return Manager.instance.getListenerCount();
 	}
 	
-	
+	@Stat(name = "message")
+	public void broadcast(String o)
+	{
+		Bukkit.broadcastMessage(o);
+	}
 
 	//static logger warning
 	public static void info(String message)
