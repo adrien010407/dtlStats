@@ -2,6 +2,7 @@ package net.dandielo.stats.bukkit;
 
 import net.dandielo.stats.api.Listener;
 import net.dandielo.stats.api.Stat;
+import net.dandielo.stats.api.Stat.RequestType;
 import net.dandielo.stats.api.Updater;
 import net.dandielo.stats.core.Manager;
 import net.dandielo.stats.core.Server;
@@ -30,7 +31,6 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 		
 		//get the port that we will listen to :)
 		Server.port = getConfig().getInt("port", Server.port);
-		
 		Server.init();
 		
 		server = Server.instance;
@@ -45,23 +45,27 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 	public void onDisable()
 	{
 		server.disconnect();
-	}
-	
-	
+	}	
 	
 	/**
 	 * Some sample statistics
 	 */
-	@Stat(name = "listenerCount")
+	@Stat(name = "listenerCount", requestType = RequestType.GET)
 	public int plugins()
 	{
 		return Manager.instance.getListenerCount();
 	}
 	
-	@Stat(name = "message")
-	public void broadcast(String o)
+	@Stat(name = "{user}/message", requestType = RequestType.UPDATE)
+	public void broadcast(String user, String msg)
 	{
-		Bukkit.broadcastMessage(o);
+		Bukkit.broadcastMessage("[" + user + "] " + msg);
+	}
+	
+	@Stat(name = "message", requestType = RequestType.UPDATE)
+	public void broadcast(String msg)
+	{
+		Bukkit.broadcastMessage(msg);
 	}
 
 	//static logger warning

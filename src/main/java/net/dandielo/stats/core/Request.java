@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.dandielo.stats.exceptions.InvalidRequestException;
 
 public class Request implements Runnable {
 
@@ -31,6 +31,7 @@ public class Request implements Runnable {
 			
 			RequestType req;
 			String line;
+			
 			//handle the incoming connection
 			while(valid)
 			{
@@ -43,25 +44,32 @@ public class Request implements Runnable {
 				//if disconnect then disconnect, lol
 				if ( req == null || req.disconnect() ) valid = false;
 
-				//if its a read request
-				if ( valid && req.update() )
+				try
 				{
-					RequestInfo info = new RequestInfo(in.readLine());
-					
-					//update the stat
-					Manager.update(info.get("plugin"), info.get("stat"), info.get("value"));
-				}
-				
-				//if it's a update request
-				if ( valid && req.get() )
+					//if its a read request
+					if ( valid && req.update() )
+					{
+						RequestInfo info = new RequestInfo(in.readLine());
+
+						//update the stat
+						Manager.update(info.getPlugin(), info.getData());
+					}
+
+					//if it's a update request
+					if ( valid && req.get() )
+					{
+						RequestInfo info = new RequestInfo(in.readLine());
+
+						//get the stat value
+						Object result = Manager.get(info.getPlugin(), info.getData());
+
+						//send it back
+						out.println(result);
+					}
+				} 
+				catch(InvalidRequestException e)
 				{
-					RequestInfo info = new RequestInfo(in.readLine());
-					
-					//get the stat value
-					Object result = Manager.get(info.get("plugin"), info.get("stat"));
-					
-					//send it back
-					out.println(result);
+					System.out.print("An invalid request was send");
 				}
 			}
 
@@ -74,23 +82,29 @@ public class Request implements Runnable {
 	static class RequestInfo
 	{
 		//the pattern used to split the request string
-		private static Pattern pattern = Pattern.compile("(([^:]+):{0,1})");
-		private static String[] field = { "plugin", "stat", "value" };
+		private static Pattern pattern = Pattern.compile("(?<plugin>[^:]+):(?<data>[\\S\\s]+)");
 
-		private Map<String, String> data = new HashMap<String, String>();
+		private String plugin;
+		private String data;
 		
-		public RequestInfo(String data)
+		public RequestInfo(String request) throws InvalidRequestException
 		{
-			Matcher matcher = pattern.matcher(data);
+			Matcher matcher = pattern.matcher(request);
+			if ( !matcher.matches() )
+				throw new InvalidRequestException(request);
 			
-			int i = 0;
-			while(matcher.find())
-				this.data.put(field[i++], matcher.group(2));
+			plugin = matcher.group("plugin");
+			data = matcher.group("data");
 		}
 		
-		public String get(String field)
+		public String getData()
 		{
-			return data.get(field);
+			return data;
+		}
+		
+		public String getPlugin()
+		{
+			return plugin;
 		}
 	}
 	
