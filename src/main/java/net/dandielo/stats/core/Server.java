@@ -33,6 +33,7 @@ public class Server extends Thread {
 	private Server() throws IOException
 	{
 		server = new ServerSocket(port);
+		server.setReuseAddress(true);
 	}
 	
 	public static void init()
