@@ -1,4 +1,4 @@
 name: dtlStats
 main: net.dandielo.stats.bukkit.Stats
-version: 1.0.0 Beta
+version: 1.1.0 Beta
 description: A web <-> server statistic plugin :)
