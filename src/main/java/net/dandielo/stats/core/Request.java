@@ -93,8 +93,8 @@ public class Request implements Runnable {
 			if ( !matcher.matches() )
 				throw new InvalidRequestException(request);
 			
-			plugin = matcher.group("plugin");
-			data = matcher.group("data");
+			plugin = matcher.group(1);
+			data = matcher.group(2);
 		}
 		
 		public String getData()
