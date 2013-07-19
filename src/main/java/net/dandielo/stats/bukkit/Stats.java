@@ -21,10 +21,13 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 
 	//The server instance
 	private Server server;
+	private static Stats instance;
 	
 	@Override
 	public void onEnable()
 	{
+		instance = this;
+		
 		console = Bukkit.getConsoleSender();
 		
 		this.saveDefaultConfig();
@@ -39,6 +42,11 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 		Manager.registerUpdater("dtlStats", this);
 		
 		info("Enabled dtlStats beta");
+	}
+	
+	public static Stats getInstance()
+	{
+		return instance;
 	}
 	
 	@Override

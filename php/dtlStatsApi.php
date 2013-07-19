@@ -83,6 +83,7 @@ class Stat
 
         Serv::init($address, $port);
         Serv::connect();
+        Serv::send("pass\n");
     }
 
     public function __setPlugin($plugin)

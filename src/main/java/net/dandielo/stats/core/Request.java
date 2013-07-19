@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.dandielo.stats.bukkit.Stats;
 import net.dandielo.stats.exceptions.InvalidRequestException;
 
 public class Request implements Runnable {
@@ -32,8 +33,11 @@ public class Request implements Runnable {
 			RequestType req;
 			String line;
 			
+			String pass = in.readLine();
+			String cpass = Stats.getInstance().getConfig().getString("pass");
+			
 			//handle the incoming connection
-			while(valid)
+			while(valid && pass.equals(cpass))
 			{
 				line = null;
 				req = null;
