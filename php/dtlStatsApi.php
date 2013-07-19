@@ -93,7 +93,7 @@ class Stat
     public function __getStat($stat)
     {
         Serv::send("GET\n");
-        Serv::send("$this->plugin:$stat:get\n");
+        Serv::send("$this->plugin:$stat\n");
 
         $buffer = Serv::read(255);
 
@@ -108,7 +108,7 @@ class Stat
     public function __updateStat($stat, $value)
     {
         Serv::send("UPDATE\n");
-        Serv::send("$this->plugin:$stat:$value\n");
+        Serv::send("$this->plugin:$stat/$value\n");
     }
 
     public static function connect($address, $port)
