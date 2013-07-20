@@ -1,11 +1,10 @@
 package net.dandielo.stats.core;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-
 import net.dandielo.stats.bukkit.Stats;
 
 /**
@@ -36,7 +35,17 @@ public class Server extends Thread {
 	{
 		server = new ServerSocket();
 		server.setReuseAddress(true);
-		server.bind(InetSocketAddress.createUnresolved("0.0.0.0", port));
+		
+		while( !server.isBound() )
+		{
+			try
+			{
+		        server.bind(new InetSocketAddress(port));
+			} catch ( BindException e )
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void init()
@@ -85,15 +94,6 @@ public class Server extends Thread {
 		
 		Stats.info("Stopped the listener");
 		
-		//close the socket
-		try
-		{
-			server.close();
-		}
-		catch( IOException e )
-		{
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -104,6 +104,13 @@ public class Server extends Thread {
 	
 	public void disconnect()
 	{
+		//close the server socket
+		try
+		{
+			server.close();
+		} catch( IOException e ) { e.printStackTrace(); }
+		
+		//thread stop
 		stop = true;
 	}
 }

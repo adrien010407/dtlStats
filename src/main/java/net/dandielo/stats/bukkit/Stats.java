@@ -54,6 +54,10 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 	public void onDisable()
 	{
 		server.disconnect();
+		try
+		{
+			server.join(500);
+		} catch ( Exception e ) { }
 	}	
 	
 	/**
