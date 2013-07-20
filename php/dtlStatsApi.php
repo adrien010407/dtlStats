@@ -83,7 +83,11 @@ class Stat
 
         Serv::init($address, $port);
         Serv::connect();
-        Serv::send("pass\n");
+    }
+
+    public function __pass($pass) 
+    {
+        Serv::send("$pass\n");
     }
 
     public function __setPlugin($plugin)
@@ -115,6 +119,11 @@ class Stat
     public static function connect($address, $port)
     {
         static::$instance = new Stat($address, $port);
+    }
+
+    public static function pass($pass)
+    {
+        static::$instance->__pass($pass);
     }
 
     public static function plugin($plugin)
