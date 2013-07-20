@@ -301,7 +301,7 @@ public class Manager {
 		while(matcher.find())
 		{
 			if ( matcher.group(1) != null )
-				matcher.appendReplacement(pattern, "([^\\\\{\\\\}/]+)");
+				matcher.appendReplacement(pattern, "([^/]+)");
 			else
 				matcher.appendReplacement(pattern, "$2");
 		}
