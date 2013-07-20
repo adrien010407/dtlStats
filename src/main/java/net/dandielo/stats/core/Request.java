@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,11 @@ public class Request implements Runnable {
 
 	public Request(Socket incoming)
 	{
-		this.socket = incoming;
+		socket = incoming;
+		try
+		{
+			socket.setSoTimeout(120 * 1000);
+		} catch( SocketException e ) { e.printStackTrace(); }
 	}
 
 	@Override
