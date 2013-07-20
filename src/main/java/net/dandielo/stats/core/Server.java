@@ -1,8 +1,10 @@
 package net.dandielo.stats.core;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 import net.dandielo.stats.bukkit.Stats;
 
@@ -32,8 +34,9 @@ public class Server extends Thread {
 	 */
 	private Server() throws IOException
 	{
-		server = new ServerSocket(port);
+		server = new ServerSocket();
 		server.setReuseAddress(true);
+		server.bind(InetSocketAddress.createUnresolved("0.0.0.0", port));
 	}
 	
 	public static void init()

@@ -86,7 +86,7 @@ public class Request implements Runnable {
 	static class RequestInfo
 	{
 		//the pattern used to split the request string
-		private static Pattern pattern = Pattern.compile("(?<plugin>[^:]+):(?<data>[\\S\\s]+)");
+		private static Pattern pattern = Pattern.compile("([^:]+):([\\S\\s]+)");
 
 		private String plugin;
 		private String data;
