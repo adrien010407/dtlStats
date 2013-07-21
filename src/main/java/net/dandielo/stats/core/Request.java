@@ -85,7 +85,7 @@ public class Request implements Runnable {
 			//close the socket
 			socket.close();
 		}
-		catch( IOException e ) { }
+		catch( Exception e ) { }
 	}
 	
 	static class RequestInfo
