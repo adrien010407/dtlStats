@@ -7,13 +7,14 @@
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<craftbukkit.version>1.6.2-R0.1-SNAPSHOT</craftbukkit.version>
+    <json.version>20090211</json.version>
     <build.number>Unknown</build.number>
   </properties>
   
   
 	<!-- Repositories -->
 	<repositories> 
-		<repository>
+		<repository> 
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
@@ -21,6 +22,12 @@
 	
 	<!-- Repositories -->
  	<dependencies>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
@@ -34,13 +41,47 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>shade</goal>
+          </goals>
+          <configuration>
+            <artifactSet>
+              <includes>
+                <include>org.json</include>
+              </includes>
+            </artifactSet>
+            <relocations>
+              <relocation>
+	            <pattern>org.json</pattern>
+	            <shadedPattern>org.shade.json</shadedPattern>
+              </relocation>
+            </relocations>
+          </configuration>
+         </execution>
+       </executions>
+     </plugin>
+
+     <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-jar-plugin</artifactId>
+       <version>2.2</version>
+     </plugin>
+
+	 <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>2.5.1</version>
+		<configuration>
+			<!-- put your configurations here -->
+		</configuration>
+	 </plugin>
+
     </plugins>
   </build>
 </project>
