@@ -1,7 +1,6 @@
 package net.dandielo.stats.core;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -70,10 +69,10 @@ public class Request implements Runnable {
 						RequestInfo info = new RequestInfo(in.readLine());
 
 						//get the stat value
-						Object result = Manager.get(info.getPlugin(), info.getData());
+						Response result = Manager.get(info.getPlugin(), info.getData());
 
 						//send it back
-						out.println(result);
+						out.println(result.stringResponse());
 					}
 				} 
 				catch(InvalidRequestException e)

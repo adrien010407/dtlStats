@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import net.dandielo.stats.api.Listener;
 import net.dandielo.stats.api.Stat;
 import net.dandielo.stats.api.Updater;
+import net.dandielo.stats.core.response.ObjectResponse;
 
 public class Manager {	
 	//Manager instance
@@ -211,17 +212,17 @@ public class Manager {
 	 * @param stat
 	 * The stat which value will be gathered
 	 */
-	public static Object get(String plugin, String stat)
+	public static Response get(String plugin, String stat)
 	{
 		try
 		{
 			return instance.__get(plugin, stat);
 		}
-		catch( Exception e ) { }
-		return null;
+		catch( Exception e ) { e.printStackTrace(); }
+		return new ObjectResponse(null);
 	}
 	
-	public Object __get(String plugin, String stat) 
+	public Response __get(String plugin, String stat) 
 	{
 		Iterator<StatMethod> it = listeners.get(plugin).iterator();
 		
@@ -235,7 +236,7 @@ public class Manager {
 			} catch( Exception e ) { e.printStackTrace(); }
 		}
 	
-		return !done ? null : method.result(); 
+		return !done ? new ObjectResponse(null) : method.result(); 
 	}
 	
 	static class StatMethod
@@ -243,7 +244,7 @@ public class Manager {
 		private Object instance; 
 		private Method statMethod;
 		private Pattern statPattern;
-		private Object lastResult;
+		private Response lastResult;
 		
 		public StatMethod(Object inst, String statDefinition, Method method)
 		{
@@ -252,7 +253,7 @@ public class Manager {
 			instance = inst;
 		}
 		
-		public Object result()
+		public Response result()
 		{
 			return lastResult;
 		}
@@ -266,7 +267,14 @@ public class Manager {
 			for ( int i = 0 ; i < matcher.groupCount() ; ++i )
 				values.add(matcher.group(i+1));
 			
-			lastResult = statMethod.invoke(instance, values.isEmpty() ? null : values.toArray());
+			//set the response result
+			Object result = statMethod.invoke(instance, values.isEmpty() ? null : values.toArray());
+			if ( result instanceof Response )
+				lastResult = (Response) result;
+			else
+				lastResult = new ObjectResponse(result);
+			
+			//true because finished
 			return true;
 		}
 	}

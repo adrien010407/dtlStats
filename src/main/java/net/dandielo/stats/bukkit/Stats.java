@@ -1,9 +1,8 @@
 package net.dandielo.stats.bukkit;
 
-import net.dandielo.stats.api.Listener;
-import net.dandielo.stats.api.Stat;
-import net.dandielo.stats.api.Stat.RequestType;
-import net.dandielo.stats.api.Updater;
+import net.dandielo.stats.bukkit.stats.BukkitStats;
+import net.dandielo.stats.bukkit.stats.PlayerStats;
+import net.dandielo.stats.bukkit.stats.WorldStats;
 import net.dandielo.stats.core.Manager;
 import net.dandielo.stats.core.Server;
 
@@ -12,7 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Stats extends JavaPlugin implements Listener, Updater {
+public class Stats extends JavaPlugin {
 	//console prefix
 	public static final String PREFIX = "[dtlStats]" + ChatColor.WHITE; 
 	
@@ -38,8 +37,15 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 		
 		server = Server.instance;
 		
-		Manager.registerListener("dtlStats", this);
-		Manager.registerUpdater("dtlStats", this);
+		//bukkit listener and updater
+		Manager.registerListener("dtlStats", BukkitStats.class);
+		Manager.registerUpdater("dtlStats", BukkitStats.class);
+		
+		//player listener
+		Manager.registerListener("dtlStats", PlayerStats.class);
+		
+		//world listener
+		Manager.registerListener("dtlStats", WorldStats.class);
 		
 		info("Enabled dtlStats beta");
 	}
@@ -58,30 +64,6 @@ public class Stats extends JavaPlugin implements Listener, Updater {
 			server.join(500);
 		} catch ( Exception e ) { }
 	}	
-	
-	/**
-	 * Some sample statistics
-	 */
-	@Stat(name = "listenerCount", requestType = RequestType.GET)
-	public int plugins()
-	{
-		return Manager.instance.getListenerCount();
-	}
-	
-	@Stat(name = "{type}", requestType = RequestType.UPDATE)
-	public void broadcast(String type, String args)
-	{
-		if ( type.equalsIgnoreCase("broadcast") )
-			Bukkit.broadcastMessage(args);
-		if ( type.equalsIgnoreCase("command") )
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), args);
-	}
-	
-	@Stat(name = "message", requestType = RequestType.UPDATE)
-	public void broadcast(String msg)
-	{
-		Bukkit.broadcastMessage(msg);
-	}
 
 	//static logger warning
 	public static void info(String message)
