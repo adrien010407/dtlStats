@@ -85,11 +85,10 @@ public class Server extends Thread {
 				//run the request asynchronous 
 				Thread t = new Thread(request);
 				t.start();
-			}
-			catch( IOException e )
-			{
-				e.printStackTrace();
-			}
+			} catch( Exception e ) { }
+			//{
+			//	e.printStackTrace();
+			//}
 		}
 		
 		Stats.info("Stopped the listener");

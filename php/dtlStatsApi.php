@@ -385,6 +385,11 @@ class StatClass
 
 }
 
+class Players extends StatClass
+{
+    protected $stat = "players/list";
+}
+
 class Player extends StatClass
 {
     protected $stat = "players/player/{player}";
