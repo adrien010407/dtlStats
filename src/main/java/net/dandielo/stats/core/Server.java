@@ -86,9 +86,6 @@ public class Server extends Thread {
 				Thread t = new Thread(request);
 				t.start();
 			} catch( Exception e ) { }
-			//{
-			//	e.printStackTrace();
-			//}
 		}
 		
 		Stats.info("Stopped the listener");
