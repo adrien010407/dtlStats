@@ -1,5 +1,3 @@
-<?php
-
 class Socket
 {
     private static $instance;
@@ -8,6 +6,7 @@ class Socket
     private $port;
 
     private $socket;
+    private $connected = FALSE;
 
     private function __construct($address, $port)
     {
@@ -19,7 +18,12 @@ class Socket
 
     private function __connect()
     {
-        socket_connect($this->socket, $this->address, $this->port);
+        $this->connected = @socket_connect($this->socket, $this->address, $this->port);
+    }
+
+    private function __connected()
+    {
+    	return $this->connected;
     }
 
     private function __send($message)
@@ -37,6 +41,19 @@ class Socket
         socket_close($this->socket);
     }
 
+    public static function init($address, $port)
+    {
+        if ( static::$instance == null )
+        {
+            static::$instance = new Socket($address, $port);
+        }
+    }
+
+    public static function connected()
+    {
+    	return static::$instance->__connected();
+    }
+
     public static function send($message)
     {
         return static::$instance->__send($message);
@@ -45,14 +62,6 @@ class Socket
     public static function read($len = 1024)
     {
         return static::$instance->__read($len);
-    }
-
-    public static function init($address, $port)
-    {
-        if ( static::$instance == null )
-        {
-            static::$instance = new Socket($address, $port);
-        }
     }
 
     public static function connect()
@@ -121,8 +130,14 @@ class Stat
         static::$instance = new Stat($address, $port);
     }
 
+    public static function connected()
+    {
+    	return Socket::connected();
+    }
+
     public static function pass($pass)
     {
+    	if ( !Stat::connected() ) return;
         static::$instance->__pass($pass);
     }
 
@@ -385,10 +400,7 @@ class StatClass
 
 }
 
-class Players extends StatClass
-{
-    protected $stat = "players/list";
-}
+class Players extends StatClass { }
 
 class Player extends StatClass
 {
@@ -397,9 +409,7 @@ class Player extends StatClass
 
     public function replaceStat($stat, $clazz)
     {
-        //if ( $clazz != "Player" )
         return str_replace("{player}", $this->player == null ? $clazz : $this->player, $stat);
-        //return "players/list";
     }
 
     public static function get($playerName)
@@ -413,7 +423,7 @@ class Player extends StatClass
         return $player;
     }
 }
-
+ 
 class Bukkit extends StatClass
 {
     protected $stat = "bukkit/info";
@@ -434,19 +444,24 @@ class Bukkit extends StatClass
     }
 }
 
+class Worlds extends StatClass { }
+
 class World extends StatClass
 {
     protected $stat = "worlds/world/{world}";
+    protected $world = null;
 
     public function replaceStat($stat, $clazz)
     {
-        if ( $clazz != "World" )
-            return str_replace("{world}", $clazz, $stat);
-        return "worlds/list";
+        return str_replace("{world}", $this->world == null ? $clazz : $this->world, $stat);
     }
-
+ 
     public static function get($world)
     {
-        return new World("World", array("stat"=>"worlds/world/$world"));
+        $nw = new World("World", array( "stat"=>"worlds/world/$world" )); 
+
+        $nw->world = $world;
+
+        return $nw;
     }
 }

@@ -55,11 +55,14 @@ public class WorldStats implements Listener {
 		//world stats
 		response.key("entities").object();
 		response.set("count", world.getEntities().size());
+		response.set("living", world.getLivingEntities().size());
 		
 		Map<EntityType, Number> entities = new HashMap<EntityType, Number>();
 		for ( Entity entity : world.getEntities() )
 			if ( entities.containsKey(entity.getType()) )
 				entities.put(entity.getType(), entities.get(entity.getType()).intValue() + 1);
+			else
+				entities.put(entity.getType(), 1);
 		
 		for ( Map.Entry<EntityType, Number> entry : entities.entrySet() )
 			response.set(entry.getKey().name().toLowerCase(), entry.getValue().intValue());
