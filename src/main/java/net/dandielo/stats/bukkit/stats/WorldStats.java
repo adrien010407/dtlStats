@@ -28,6 +28,9 @@ public class WorldStats implements Listener {
 		//offline players
 		response.object();
 		
+		for ( World world : Bukkit.getWorlds() )
+			response.key(world.getName()).value(world.getWorldType().name());
+		
 		//send the response back
 		response.endobject();
 		return response;
@@ -53,7 +56,7 @@ public class WorldStats implements Listener {
 		response.object();
 		
 		//world stats
-		response.key("entities").object();
+		response.key("entities").object(); 
 		response.set("count", world.getEntities().size());
 		response.set("living", world.getLivingEntities().size());
 		
@@ -69,8 +72,12 @@ public class WorldStats implements Listener {
 			
 		response.endobject();
 		
-		//response.key("spawnLimit").object();
-		//response.endobject();
+		response.key("spawnLimit").object();
+		response.set("monster", world.getMonsterSpawnLimit());
+		response.set("animal", world.getAnimalSpawnLimit());
+		response.set("wateranimal", world.getWaterAnimalSpawnLimit());
+		response.set("ambient", world.getAmbientSpawnLimit());
+		response.endobject();
 		
 		response.set("allowMonsters", world.getAllowMonsters());
 		response.set("allowAnimals", world.getAllowAnimals());
