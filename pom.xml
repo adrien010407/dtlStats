@@ -6,7 +6,7 @@
   
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<craftbukkit.version>1.6.2-R0.1-SNAPSHOT</craftbukkit.version>
+	<craftbukkit.version>1.6.2-R0.2-SNAPSHOT</craftbukkit.version>
     <json.version>20090211</json.version>
     <build.number>Unknown</build.number>
   </properties>
@@ -14,7 +14,7 @@
   
 	<!-- Repositories -->
 	<repositories> 
-		<repository> 
+		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
@@ -22,19 +22,26 @@
 	
 	<!-- Repositories -->
  	<dependencies>
-		<dependency>
+		<dependency> 
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>${craftbukkit.version}</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>${craftbukkit.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>${craftbukkit.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
  	</dependencies> 
   
   <description>Artificial Inteligence for Citizens 2</description>

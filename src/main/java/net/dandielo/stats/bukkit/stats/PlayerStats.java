@@ -1,8 +1,5 @@
 package net.dandielo.stats.bukkit.stats;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -54,51 +51,6 @@ public class PlayerStats implements Listener {
 	 * of the player that will be checked for stats
 	 * @param attr
 	 * that will be returned
-	 */
-	/*@Stat(name = "{name}/info/{attr}")
-	public String attr(String name, String attr)
-	{
-		Player player = Bukkit.getOfflinePlayer(name).getPlayer();
-		if ( player == null ) return "Player does not exists";
-		
-		PlayerAttr eAttr = PlayerAttr.valueOf(attr.toUpperCase());
-		if ( eAttr == null )
-			return "Wrong attribute";
-		
-		switch(eAttr)
-		{
-	//	case HEALTH: return String.format("%.2f", player.getHealth());
-	//	case MAX_HEALTH: return String.format("%.2f", player.getMaxHealth());
-	//	case ABSORB: 
-		case EXP: return String.format("%.2f", player.getExp());
-		case TOTAL_EXP: return String.valueOf(player.getTotalExperience());
-		case EXP_TO_LVL: return String.valueOf(player.getExpToLevel());
-		case EXHAUST: return String.format("%.2f", player.getExhaustion());
-		case FOOD: return String.valueOf(player.getFoodLevel());
-		case AIR: return String.valueOf(player.getRemainingAir());
-		case MAX_AIR: return String.valueOf(player.getMaximumAir());
-		case LVL: return String.valueOf(player.getLevel());
-		case LIVED: return String.valueOf(player.getTicksLived());
-		case ONLINE: return String.valueOf(player.isOnline());
-		case DEAD: return String.valueOf(player.isDead());
-		case FLYING: return String.valueOf(player.isFlying());
-		case OP: return String.valueOf(player.isOp());
-		case SLEEPING: return String.valueOf(player.isSleeping());
-		case SNEAKING: return String.valueOf(player.isSneaking());
-		case SPRINTING: return String.valueOf(player.isSprinting());
-		case WHITELISTED: return String.valueOf(player.isWhitelisted());
-		case BANNED: return String.valueOf(player.isBanned());
-		case GAMEMODE: return player.getGameMode().name().toLowerCase();
-		default: return "unsupported";
-		}
-	}*/
-	
-	/**
-	 * Returns information of a specific player
-	 * @param name
-	 * of the player that will be checked for stats
-	 * @param attr
-	 * that will be returned
 	 * @throws JSONException 
 	 */
 	@Stat(name = "player/{name}")
@@ -116,6 +68,7 @@ public class PlayerStats implements Listener {
 		response.key("exp").value(player.getExp());
 		response.key("expTotal").value(player.getTotalExperience());
 		response.key("expToLvl").value(player.getExpToLevel());
+		response.key("test").value("test value");
 		
 		//food, exhaust, lvl
 		response.key("level").value(player.getLevel());
@@ -127,8 +80,8 @@ public class PlayerStats implements Listener {
 		response.key("airMax").value(player.getMaximumAir());
 		
 		//health
-	//	response.key("health").value(player.getHealth());
-	//	response.key("health_max").value(player.getMaxHealth());
+		response.key("health").value(player.getHealth());
+		response.key("health_max").value(player.getMaxHealth());
 		
 		//flags
 		response.key("gamemode").value(player.getGameMode().name().toLowerCase());
@@ -153,34 +106,6 @@ public class PlayerStats implements Listener {
 		response.endobject();
 		return response;
 	}
-	
-	/**
-	 * Returns information of a specific player
-	 * @param name
-	 * of the player that will be checked for stats
-	 * @param attr
-	 * of the players location 
-	 */
-	/*@Stat(name = "{name}/loc/{attr}")
-	public String loc(String name, String attr)
-	{
-		Player player = Bukkit.getOfflinePlayer(name).getPlayer();
-		if ( player == null ) return "Player does not exists";
-		
-		PlayerAttr eAttr = PlayerAttr.valueOf(attr.toUpperCase());
-		if ( eAttr == null )
-			return "Wrong attribute";
-		
-		switch(eAttr)
-		{
-		case X: return String.format("%.3f", player.getLocation().getX());
-		case Y: return String.format("%.3f", player.getLocation().getY());
-		case Z: return String.format("%.3f", player.getLocation().getZ());
-		case WORLD: return player.getWorld().getName();
-		case WORLD_TYPE: return player.getWorld().getWorldType().getName();
-		default: return "unsupported";
-		}
-	}*/
 	
 	/**
 	 * Returns information of a specific player
@@ -236,38 +161,5 @@ public class PlayerStats implements Listener {
 		//send the response
 		response.endobject();
 		return response;
-	}
-	
-	public static void main(String[] a) throws JSONException
-	{
-		JSonResponse r = new JSonResponse();
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("test", 3);
-		map.put("no_test", "but still");
-		r.object().key("asd").object().key("Avidi").value(map).endobject().endobject();
-		
-		System.out.print(r.stringResponse());
-	}
-	
-	/**
-	 * Returns information of a specific player
-	 * @param name
-	 * of the player that will be checked for stats
-	 * @param slot
-	 * that will be returned with item information
-	 */
-	
-	enum PlayerAttr
-	{
-		//numbers
-		HEALTH, ABSORB, DEFENSE, EXHAUST, EXP, EXP_TO_LVL, FOOD, MAX_HEALTH, MAX_AIR, AIR, LVL,
-		TOTAL_EXP, LIVED,
-		//positon 
-		X, Y, Z, WORLD, WORLD_TYPE, WORLD_NAME,
-		//items
-		INV, IN_HAND, ENDER, ARMOR, 
-		//other 
-		GAMEMODE, ONLINE, SNEAKING, WHITELISTED, BANNED, DEAD, SLEEPING, OP, FLYING, SPRINTING;
 	}
 }
