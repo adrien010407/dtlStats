@@ -1,4 +1,4 @@
-package net.dandielo.stats.api;
+package net.dandielo.api.stats;
 
 public interface Listener {
 

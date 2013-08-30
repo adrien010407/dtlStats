@@ -1,11 +1,11 @@
-package net.dandielo.stats.api;
+package net.dandielo.api.stats;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static net.dandielo.stats.api.Stat.RequestType.*;
+import static net.dandielo.api.stats.Stat.RequestType.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
