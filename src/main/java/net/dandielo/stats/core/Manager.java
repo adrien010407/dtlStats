@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.dandielo.stats.api.Listener;
-import net.dandielo.stats.api.Stat;
-import net.dandielo.stats.api.Updater;
+import net.dandielo.api.stats.Listener;
+import net.dandielo.api.stats.Stat;
+import net.dandielo.api.stats.Updater;
 import net.dandielo.stats.core.response.ObjectResponse;
 
 public class Manager {	

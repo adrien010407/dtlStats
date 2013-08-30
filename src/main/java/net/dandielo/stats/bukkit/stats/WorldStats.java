@@ -9,8 +9,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.json.JSONException;
 
-import net.dandielo.stats.api.Listener;
-import net.dandielo.stats.api.Stat;
+import net.dandielo.api.stats.Listener;
+import net.dandielo.api.stats.Stat;
 import net.dandielo.stats.core.response.JSonResponse;
 
 @Stat(name = "worlds")
