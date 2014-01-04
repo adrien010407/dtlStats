@@ -24,7 +24,7 @@ public class Request implements Runnable {
 			socket.setSoTimeout(120 * 1000);
 		} catch( SocketException e ) { e.printStackTrace(); }
 	}
-
+ 
 	@Override
 	public void run()
 	{
@@ -58,6 +58,7 @@ public class Request implements Runnable {
 					if ( valid && req.update() )
 					{
 						RequestInfo info = new RequestInfo(in.readLine());
+						System.out.print(info.getPlugin() + ":" + info.getData());
 
 						//update the stat
 						Manager.update(info.getPlugin(), info.getData());
