@@ -112,7 +112,7 @@ public class Manager {
 			{
 				Stat stat = method.getAnnotation(Stat.class);
 				if ( !stat.requestType().get() )
-					instance.listeners.get(plugin).add(new StatMethod(inst, clazzStat + stat.name() + "/{value}", method));
+					instance.updaters.get(plugin).add(new StatMethod(inst, clazzStat + stat.name() + "/{value}", method));
 			}
 		}
 	}
@@ -178,7 +178,7 @@ public class Manager {
 			{
 				Stat stat = method.getAnnotation(Stat.class);
 				if ( !stat.requestType().get() )
-					instance.listeners.get(plugin).add(new StatMethod(updater, clazzStat + stat.name() + "/{value}", method));
+					instance.updaters.get(plugin).add(new StatMethod(updater, clazzStat + stat.name() + "/{value}", method));
 			}
 		}
 	}
