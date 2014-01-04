@@ -262,13 +262,17 @@ public class Manager {
 
 		public boolean invoke(String request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 		{
+			System.out.print(request);
 			Matcher matcher = statPattern.matcher(request);
 			if ( !matcher.matches() ) return false;
 			
 			List<String> values = new ArrayList<String>();
 			for ( int i = 0 ; i < matcher.groupCount() ; ++i )
+			{
+				System.out.print(matcher.group(i+1));
 				values.add(matcher.group(i+1));
-			
+			}
+			System.out.print(values.size());
 			//set the response result
 			Object result = statMethod.invoke(instance, values.isEmpty() ? null : values.toArray());
 			if ( result instanceof Response )
