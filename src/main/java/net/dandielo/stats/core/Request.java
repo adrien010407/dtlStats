@@ -58,7 +58,6 @@ public class Request implements Runnable {
 					if ( valid && req.update() )
 					{
 						RequestInfo info = new RequestInfo(in.readLine());
-						System.out.print(info.getPlugin() + ":" + info.getData());
 
 						//update the stat
 						Manager.update(info.getPlugin(), info.getData());
