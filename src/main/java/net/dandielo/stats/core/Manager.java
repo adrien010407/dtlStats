@@ -105,7 +105,7 @@ public class Manager {
 		if ( !instance.updaters.containsKey(plugin) )
 			instance.updaters.put(plugin, new ArrayList<StatMethod>());
 
-		//add all @Stat methods 
+		//add all @Stat methods  
 		for ( Method method : clazz.getMethods() )
 		{
 			if ( method.isAnnotationPresent(Stat.class) )
