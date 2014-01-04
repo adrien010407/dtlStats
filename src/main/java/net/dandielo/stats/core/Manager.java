@@ -177,6 +177,7 @@ public class Manager {
 			if ( method.isAnnotationPresent(Stat.class) )
 			{
 				Stat stat = method.getAnnotation(Stat.class);
+				System.out.print(clazzStat + stat.name() + "/{value}");
 				if ( !stat.requestType().get() )
 					instance.updaters.get(plugin).add(new StatMethod(updater, clazzStat + stat.name() + "/{value}", method));
 			}
@@ -249,6 +250,7 @@ public class Manager {
 		public StatMethod(Object inst, String statDefinition, Method method)
 		{
 			statPattern = statPattern(statDefinition);
+			System.out.print(statPattern.pattern());
 			statMethod = method;
 			instance = inst;
 		}
