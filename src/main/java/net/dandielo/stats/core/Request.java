@@ -97,12 +97,14 @@ public class Request implements Runnable {
 		
 		public RequestInfo(String request) throws InvalidRequestException
 		{
+			System.out.print(request);
 			Matcher matcher = pattern.matcher(request);
 			if ( !matcher.matches() )
 				throw new InvalidRequestException(request);
-			
+
 			plugin = matcher.group(1);
 			data = matcher.group(2);
+			System.out.print(plugin + ":" + data);
 		}
 		
 		public String getData()
