@@ -177,7 +177,6 @@ public class Manager {
 			if ( method.isAnnotationPresent(Stat.class) )
 			{
 				Stat stat = method.getAnnotation(Stat.class);
-				System.out.print(clazzStat + stat.name() + "/{value}");
 				if ( !stat.requestType().get() )
 					instance.updaters.get(plugin).add(new StatMethod(updater, clazzStat + stat.name() + "/{value}", method));
 			}
@@ -202,7 +201,7 @@ public class Manager {
 	
 	public void __update(String plugin, String stat) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
-        Iterator<StatMethod> it = listeners.get(plugin).iterator();
+        Iterator<StatMethod> it = updaters.get(plugin).iterator();
 		while(it.hasNext() && !it.next().invoke(stat));
 	}
 
@@ -250,7 +249,6 @@ public class Manager {
 		public StatMethod(Object inst, String statDefinition, Method method)
 		{
 			statPattern = statPattern(statDefinition);
-			System.out.print(statPattern.pattern());
 			statMethod = method;
 			instance = inst;
 		}
@@ -262,17 +260,14 @@ public class Manager {
 
 		public boolean invoke(String request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
 		{
-			System.out.print(request);
 			Matcher matcher = statPattern.matcher(request);
 			if ( !matcher.matches() ) return false;
 			
 			List<String> values = new ArrayList<String>();
 			for ( int i = 0 ; i < matcher.groupCount() ; ++i )
 			{
-				System.out.print(matcher.group(i+1));
 				values.add(matcher.group(i+1));
 			}
-			System.out.print(values.size());
 			//set the response result
 			Object result = statMethod.invoke(instance, values.isEmpty() ? null : values.toArray());
 			if ( result instanceof Response )
