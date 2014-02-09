@@ -126,14 +126,19 @@ public class PlayerStats implements Listener {
 		response.object();
 		
 		//item in hand
-		response.key("itemInHand").value(player.getItemInHand().serialize());
+		if ( player.getItemInHand() != null )
+			response.key("itemInHand").value(player.getItemInHand().serialize());
 		
 		//armor subclass
 		response.key("armor").object();
-		response.set("helmet", player.getInventory().getHelmet().serialize());
-		response.set("chest", player.getInventory().getChestplate().serialize());
-		response.set("leggings", player.getInventory().getLeggings().serialize());
-		response.set("boots", player.getInventory().getBoots().serialize());
+		if ( player.getInventory().getHelmet() != null )
+			response.set("helmet", player.getInventory().getHelmet().serialize());
+		if ( player.getInventory().getChestplate() != null )
+			response.set("chest", player.getInventory().getChestplate().serialize());
+		if ( player.getInventory().getLeggins() != null )
+			response.set("leggings", player.getInventory().getLeggings().serialize());
+		if ( player.getInventory().getBoots() != null )
+			response.set("boots", player.getInventory().getBoots().serialize());
 		response.endobject();
 		
 		//inv subclass
