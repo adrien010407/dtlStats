@@ -135,7 +135,7 @@ public class PlayerStats implements Listener {
 			response.set("helmet", player.getInventory().getHelmet().serialize());
 		if ( player.getInventory().getChestplate() != null )
 			response.set("chest", player.getInventory().getChestplate().serialize());
-		if ( player.getInventory().getLeggins() != null )
+		if ( player.getInventory().getLeggings() != null )
 			response.set("leggings", player.getInventory().getLeggings().serialize());
 		if ( player.getInventory().getBoots() != null )
 			response.set("boots", player.getInventory().getBoots().serialize());
