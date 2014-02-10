@@ -3,21 +3,24 @@ package net.dandielo.stats.bukkit.stats;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.json.JSONException;
 
 import net.dandielo.api.stats.Listener;
 import net.dandielo.api.stats.Stat;
+import net.dandielo.api.stats.Stat.RequestType;
+import net.dandielo.api.stats.Updater;
 import net.dandielo.stats.core.response.JSonResponse;
 
 @Stat(name = "players")
-public class PlayerStats implements Listener {
+public class PlayerStats implements Listener, Updater {
 	
 	/**
 	 * Returns a list of players on the server
 	 * @throws JSONException 
 	 */
-	@Stat(name = "list")
+	@Stat(name = "list", requestType = RequestType.GET)
 	public Object list() throws JSONException
 	{
 		JSonResponse response = new JSonResponse();
@@ -53,7 +56,7 @@ public class PlayerStats implements Listener {
 	 * that will be returned
 	 * @throws JSONException 
 	 */
-	@Stat(name = "player/{name}")
+	@Stat(name = "player/{name}", requestType = RequestType.GET)
 	public Object playerInfo(String name) throws JSONException
 	{
 		//check if the player exists
@@ -115,7 +118,7 @@ public class PlayerStats implements Listener {
 	 * that will be returned with item information
 	 * @throws JSONException 
 	 */
-	@Stat(name = "player/{name}/inv")
+	@Stat(name = "player/{name}/inv", requestType = RequestType.GET)
 	public Object inv(String name) throws JSONException
 	{
 		Player player = Bukkit.getPlayer(name);
@@ -167,4 +170,21 @@ public class PlayerStats implements Listener {
 		response.endobject();
 		return response;
 	}
+	
+	@Stat(name = "player/{name}/inv/{slot}", requestType = RequestType.UPDATE)
+	public Object itemMove(String name, String slot1, String slot2) 
+	{
+		Player player = Bukkit.getPlayer(name);
+		if ( player == null ) return "Player does not exists";
+		
+		Inventory inv = player.getInventory();
+		int s1 = Integer.parseInt(slot1);
+		int s2 = Integer.parseInt(slot2);
+		
+		ItemStack is = inv.getItem(s1);
+		inv.setItem(s1, inv.getItem(s2));
+		inv.setItem(s2, is);
+		return null;
+	}
+	
 }

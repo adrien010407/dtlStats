@@ -43,6 +43,7 @@ public class Stats extends JavaPlugin {
 		
 		//player listener
 		Manager.registerListener("dtlStats", PlayerStats.class);
+		Manager.registerUpdater("dtlStats", PlayerStats.class);
 		
 		//world listener
 		Manager.registerListener("dtlStats", WorldStats.class);
