@@ -25,7 +25,6 @@ public class Request implements Runnable {
 		} catch( SocketException e ) { e.printStackTrace(); }
 	}
  
-	@Override
 	public void run()
 	{
 		try
