@@ -43,6 +43,23 @@
             <scope>provided</scope>
         </dependency>
  	</dependencies> 
+ 	
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>dtl-repo</id>
+      <name>dtl Repository</name>
+      <url>http://repo.dandielo.net/content/repositories/releases/</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>dtl-repo</id>
+      <name>dtl Snapshots</name>
+      <url>sftp://repo.dandielo.net/content/repositories/snapshots/</url>
+      <layout>legacy</layout>
+    </snapshotRepository>
+  </distributionManagement>
   
   <description>Artificial Inteligence for Citizens 2</description>
   <build>
