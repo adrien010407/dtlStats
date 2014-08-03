@@ -59,14 +59,14 @@
 	<distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
-			<id>dtl-repo</id>
+			<id>deployment</id>
 			<name>dtl Repository</name>
-			<url>http://repo.dandielo.net/nexus/content/repositories/releases/</url>
+			<url>http://dandielo.net:8081/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<uniqueVersion>true</uniqueVersion>
-			<id>snapshots</id> 
-			<url>http://repo.dandielo.net/nexus/content/repositories/snapshots</url>
+			<id>deployment</id> 
+			<url>http://dandielo.net:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
