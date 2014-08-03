@@ -56,7 +56,7 @@
       <uniqueVersion>true</uniqueVersion>
       <id>dtl-repo</id>
       <name>dtl Snapshots</name>
-      <url>sftp://repo.dandielo.net/content/repositories/snapshots/</url>
+      <url>http://repo.dandielo.net/content/repositories/snapshots/</url>
       <layout>legacy</layout>
     </snapshotRepository>
   </distributionManagement>
