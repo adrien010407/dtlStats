@@ -65,9 +65,8 @@
 		</repository>
 		<snapshotRepository>
 			<uniqueVersion>true</uniqueVersion>
-			<id>dtl-repo</id>
-			<name>dtl Snapshots</name>
-			<url>http://repo.dandielo.net/nexus/content/repositories/snapshots/</url>
+			<id>snapshots</id> 
+			<url>http://repo.dandielo.net/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
