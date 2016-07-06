@@ -37,7 +37,7 @@ public class PlayerStats implements Listener, Updater {
 		//online players
 		response.key("online").object();
 		//count all online players
-		response.key("count").value(Bukkit.getOnlinePlayers().length);		
+		response.key("count").value(Bukkit.getOnlinePlayers().size());		
 		//add each player
 		for ( Player player : Bukkit.getOnlinePlayers() )
 			response.key(player.getName()).value(player.getTicksLived());

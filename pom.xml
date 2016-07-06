@@ -7,7 +7,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<craftbukkit.version>1.7.2-R0.2-SNAPSHOT</craftbukkit.version>
+		<craftbukkit.version>1.10.2-R0.1-SNAPSHOT</craftbukkit.version>
 		<json.version>20090211</json.version>
 		<build.number>Unknown</build.number>
 	</properties>
